@@ -13,7 +13,7 @@ app.listen(port, () => {
 });
 
 //GET
-app.get("/status", async (req, res) => {
+app.get("/tuya/status", async (req, res) => {
   const status = await tuya.tuyaContext().deviceStatus.status({
     device_id: process.env.TUYA_DEVICE_ID,
   });
@@ -44,6 +44,7 @@ app.post("/tuya/switch/:value", async (req, res) => {
 //POST - Mudar cor da lâmpada
 app.post("/tuya/change_color/:value", async (req, res) => {
   const value = JSON.parse(req.params.value);
+  //console.log(value); //Apenas para mostrar a cor da lâmpada
   const status = await tuya.tuyaContext().request({
     path: `/v1.0/iot-03/devices/${process.env.TUYA_DEVICE_ID}/commands`,
     method: "POST",
@@ -53,4 +54,15 @@ app.post("/tuya/change_color/:value", async (req, res) => {
   }); // montar uma função pra isso aqui
   if (!status.success) throw new Error();
   res.status(200).json(status);
+});
+
+//Api de clima:
+app.get("/weather/:lat/:lon", async (req, res) => {
+  logRequest(req);
+
+  const lat = Number(req.params.lat);
+  const lon = Number(req.params.lon);
+
+  const response = await getWeather(lat, lon);
+  res.status(200).json(response);
 });
