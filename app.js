@@ -10,6 +10,13 @@ const app = express();
 // Specify a port number for the server
 const port = 5000; //env --------------------------------
 
+export const logRequest = (req) => {
+  let msg = `[${req.method}] ${new Date()} - ${req.url}`;
+  if (req.body) msg = `${msg} - body: ${JSON.stringify(req.body)}`;
+
+  console.log(msg);
+};
+
 // Start the server and listen to the port
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -17,6 +24,7 @@ app.listen(port, () => {
 
 //GET
 app.get("/tuya/status", async (req, res) => {
+  logRequest(req);
   const status = await tuya.tuyaContext().deviceStatus.status({
     device_id: process.env.TUYA_DEVICE_ID,
   });
@@ -25,6 +33,7 @@ app.get("/tuya/status", async (req, res) => {
 
 //POST - Ligar/Desligar Lâmpada
 app.post("/tuya/switch/:value", async (req, res) => {
+  logRequest(req);
   if (!["true", "false"].includes(req.params.value)) {
     res
       .status(403)
@@ -46,6 +55,7 @@ app.post("/tuya/switch/:value", async (req, res) => {
 
 //POST - Mudar cor da lâmpada
 app.post("/tuya/change_color/:value", async (req, res) => {
+  logRequest(req);
   const value = JSON.parse(req.params.value);
   //console.log(value); //Apenas para mostrar a cor da lâmpada
   const status = await tuya.tuyaContext().request({
@@ -61,6 +71,7 @@ app.post("/tuya/change_color/:value", async (req, res) => {
 
 //GET - coletar dados do clima
 app.get("/weather/:city_name", async (req, res) => {
+  logRequest(req);
   const value = req.params.city_name
   const response = await hgweather.getWeather(value);
   res.status(200).json(response);
