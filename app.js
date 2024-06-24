@@ -1,3 +1,6 @@
+
+//import { getWeather } from "./hgweather";
+const hgweather = require("./hgweather")
 //import { TuyaContext } from "@tuya/tuya-connector-nodejs";
 const tuya = require("./tuya");
 // Import the express module
@@ -56,13 +59,9 @@ app.post("/tuya/change_color/:value", async (req, res) => {
   res.status(200).json(status);
 });
 
-//Api de clima:
-app.get("/weather/:lat/:lon", async (req, res) => {
-  logRequest(req);
-
-  const lat = Number(req.params.lat);
-  const lon = Number(req.params.lon);
-
-  const response = await getWeather(lat, lon);
+//GET - coletar dados do clima
+app.get("/weather/:city_name", async (req, res) => {
+  const value = req.params.city_name
+  const response = await hgweather.getWeather(value);
   res.status(200).json(response);
 });

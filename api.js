@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: "http://localhost:5000",
 });
 
+console.log(JSON.stringify(api));
+
 //Verificar os dados da lâmpada
 export const getStatus = async () => {
   try {
@@ -39,4 +41,4 @@ export const changeColor = async (value) => {
   }
 };
 
-changeColor({ "h": 0, "s": 1000, "v": 1000 });
+export default api;
