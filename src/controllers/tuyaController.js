@@ -1,15 +1,23 @@
-const { isDeviceRegistered } = require('../scripts/interact-contract-blockchain');
-const { sendCommand } = require('../services/tuyaService');
+const { isDeviceRegistered, checkDeviceAuthentication } = require('../scripts/interact-contract-blockchain');
+const { sendTuyaCommand } = require('../services/tuyaService');
+const config = require('../config/dotenvConfig');
 
 const getDeviceStatus = async (req, res) => {
   try {
     const deviceId = req.params.deviceId;
+    const owner = config.contractOwner;
+
     const isRegistered = await isDeviceRegistered(deviceId);
     if (!isRegistered) {
       return res.status(403).json({ error: "Device not registered in the blockchain" });
     }
 
-    const status = await sendCommand(deviceId, "get", null);
+    const isAuthenticated = await checkDeviceAuthentication(deviceId, owner);
+    if (!isAuthenticated) {
+      return res.status(403).json({ error: "Device not authenticated in the blockchain" });
+    }
+
+    const status = await sendTuyaCommand(deviceId, "get", null);
     res.status(200).json(status);
   } catch (error) {
     console.error("Error getting device status:", error);
@@ -20,6 +28,7 @@ const getDeviceStatus = async (req, res) => {
 const switchLight = async (req, res) => {
   const value = req.params.value === "true";
   const deviceId = req.params.deviceId;
+  const owner = config.contractOwner;
 
   try {
     const isRegistered = await isDeviceRegistered(deviceId);
@@ -27,7 +36,12 @@ const switchLight = async (req, res) => {
       return res.status(403).json({ error: "Device not registered in the blockchain" });
     }
 
-    const status = await sendCommand(deviceId, "switch_led", value);
+    const isAuthenticated = await checkDeviceAuthentication(deviceId, owner);
+    if (!isAuthenticated) {
+      return res.status(403).json({ error: "Device not authenticated in the blockchain" });
+    }
+
+    const status = await sendTuyaCommand(deviceId, "switch_led", value);
     res.status(200).json(status);
   } catch (error) {
     console.error("Error switching light:", error);
@@ -39,13 +53,19 @@ const changeColor = async (req, res) => {
   try {
     const value = JSON.parse(req.params.value);
     const deviceId = req.params.deviceId;
+    const owner = config.contractOwner;
 
     const isRegistered = await isDeviceRegistered(deviceId);
     if (!isRegistered) {
       return res.status(403).json({ error: "Device not registered in the blockchain" });
     }
 
-    const status = await sendCommand(deviceId, "colour_data_v2", value);
+    const isAuthenticated = await checkDeviceAuthentication(deviceId, owner);
+    if (!isAuthenticated) {
+      return res.status(403).json({ error: "Device not authenticated in the blockchain" });
+    }
+
+    const status = await sendTuyaCommand(deviceId, "colour_data_v2", value);
     res.status(200).json(status);
   } catch (error) {
     console.error("Error changing color:", error);

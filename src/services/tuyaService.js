@@ -1,21 +1,21 @@
 const tuya = require('../api/tuya');
 
-const sendCommand = async (deviceId, command, value) => {
-    try {
-      const status = await tuya.tuyaContext().request({
-        path: `/v1.0/iot-03/devices/${deviceId}/commands`,
-        method: "POST",
-        body: {
-          commands: [{ code: command, value }],
-        },
-      });
-      return status;
-    } catch (error) {
-      console.error("Error sending Tuya command:", error);
-      throw error;
-    }
-  };
+const sendTuyaCommand = async (deviceId, command, value) => {
+  try {
+    const status = await tuya.tuyaContext().request({
+      path: `/v1.0/iot-03/devices/${deviceId}/commands`,
+      method: "POST",
+      body: {
+        commands: [{ code: command, value }],
+      },
+    });
+    return status;
+  } catch (error) {
+    console.error("Error sending Tuya command:", error);
+    throw error;
+  }
+};
   
-  module.exports = {
-    sendCommand,
-  };
+module.exports = {
+  sendTuyaCommand
+};

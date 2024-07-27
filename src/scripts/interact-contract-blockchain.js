@@ -11,6 +11,17 @@ const registerDevice = async (deviceId, owner) => {
   }
 };
 
+const checkDeviceAuthentication = async (deviceId, owner) => {
+  try {
+    const { contract } = await initWeb3();
+    const isAuthenticated = await contract.methods.authenticateDevice(deviceId, owner).call();
+    return isAuthenticated;
+  } catch (error) {
+    console.error('Error checking device authentication:', error);
+    throw error;
+  }
+};
+
 const isDeviceRegistered = async (deviceId) => {
   try {
     const { contract } = await initWeb3();
@@ -24,4 +35,5 @@ const isDeviceRegistered = async (deviceId) => {
 module.exports = {
   registerDevice,
   isDeviceRegistered,
+  checkDeviceAuthentication
 };
