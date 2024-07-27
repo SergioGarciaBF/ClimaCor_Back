@@ -14,7 +14,7 @@ Substitua `{deviceId}` pelo ID do dispositivo Tuya que você quer consultar.
 **Exemplo:**  
 `http://localhost:5000/tuya/status/your_device_id`
 
-### 2. Ligar/Desligar Luz
+### 2. Ligar/Desligar Lâmpada
 
 **Método:** POST  
 **URL:** `http://localhost:5000/tuya/switch/{deviceId}/{value}`  
