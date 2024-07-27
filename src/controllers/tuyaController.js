@@ -17,7 +17,7 @@ const getDeviceStatus = async (req, res) => {
       return res.status(403).json({ error: "Device not authenticated in the blockchain" });
     }
 
-    const status = await sendTuyaCommand(deviceId, "get", null);
+    const status = await sendTuyaCommand(deviceId, null, null);
     res.status(200).json(status);
   } catch (error) {
     console.error("Error getting device status:", error);
