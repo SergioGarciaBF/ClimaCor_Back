@@ -26,11 +26,11 @@ const getDeviceStatus = async (req, res) => {
 };
 
 const switchLight = async (req, res) => {
-  const value = req.params.value === "true";
-  const deviceId = req.params.deviceId;
-  const owner = config.contractOwner;
-
   try {
+    const value = req.params.value === "true";
+    const deviceId = req.params.deviceId;
+    const owner = config.contractOwner;
+  
     const isRegistered = await isDeviceRegistered(deviceId);
     if (!isRegistered) {
       return res.status(403).json({ error: "Device not registered in the blockchain" });

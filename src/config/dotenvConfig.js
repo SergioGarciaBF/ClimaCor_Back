@@ -5,6 +5,7 @@ const config = {
   tuyaDeviceId: process.env.TUYA_DEVICE_ID,
   web3ProviderUrl: process.env.WEB3_PROVIDER_URL,
   contractOwner: process.env.NET_NAME,
+  private_key: process.env.OWNER_PRIVATE_KEY,
 };
 
 module.exports = config;

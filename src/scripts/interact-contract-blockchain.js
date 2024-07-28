@@ -1,4 +1,4 @@
-const initWeb3 = require('./web3-config');
+const { initWeb3, signMessage } = require('./web3-config');
 
 const registerDevice = async (deviceId, owner) => {
   try {
@@ -14,7 +14,8 @@ const registerDevice = async (deviceId, owner) => {
 const checkDeviceAuthentication = async (deviceId, owner) => {
   try {
     const { contract } = await initWeb3();
-    const isAuthenticated = await contract.methods.authenticateDevice(deviceId, owner).call();
+    const { messageHash, signature, signerAddress } = await signMessage(deviceId, owner);
+    const isAuthenticated = await contract.methods.authenticateDevice(deviceId, owner, messageHash, signature).send({ from: signerAddress });
     return isAuthenticated;
   } catch (error) {
     console.error('Error checking device authentication:', error);
