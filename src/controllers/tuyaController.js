@@ -4,7 +4,8 @@ const config = require('../config/dotenvConfig');
 
 const getDeviceStatus = async (req, res) => {
   try {
-    const deviceId = req.params.deviceId;
+    //const deviceId = req.params.deviceId;
+    const deviceId = config.tuyaDeviceId;
     const owner = config.contractOwner;
 
     const isRegistered = await isDeviceRegistered(deviceId);
@@ -28,7 +29,8 @@ const getDeviceStatus = async (req, res) => {
 const switchLight = async (req, res) => {
   try {
     const value = req.params.value === "true";
-    const deviceId = req.params.deviceId;
+    //const deviceId = req.params.deviceId;
+    const deviceId = config.tuyaDeviceId;
     const owner = config.contractOwner;
   
     const isRegistered = await isDeviceRegistered(deviceId);
@@ -51,8 +53,9 @@ const switchLight = async (req, res) => {
 
 const changeColor = async (req, res) => {
   try {
-    const value = JSON.parse(req.params.value);
-    const deviceId = req.params.deviceId;
+    const value = JSON.parse(req.params.value); 
+    //const deviceId = req.params.deviceId;
+    const deviceId = config.tuyaDeviceId;
     const owner = config.contractOwner;
 
     const isRegistered = await isDeviceRegistered(deviceId);

@@ -16,6 +16,7 @@ const checkDeviceAuthentication = async (deviceId, owner) => {
     const { contract } = await initWeb3();
     const { messageHash, signature, signerAddress } = await signMessage(deviceId, owner);
     const isAuthenticated = await contract.methods.authenticateDevice(deviceId, owner, messageHash, signature).send({ from: signerAddress });
+    console.log("isAuthenticated - ", isAuthenticated.status);
     return isAuthenticated;
   } catch (error) {
     console.error('Error checking device authentication:', error);

@@ -1,4 +1,4 @@
-// faz as requisições para a API de clima
+const config = require('../config/dotenvConfig');
 
 const BASE_URL = "https://api.hgbrasil.com";
 
@@ -7,7 +7,7 @@ const getWeather = async (city_name) => {
     const url =
     `${BASE_URL}/weather?` +
     new URLSearchParams({
-      key: process.env.HG_WEATHER_KEY,
+      key: config.apiKey,
       city_name: city_name
     });
   console.log(`Requesting ${url}`);

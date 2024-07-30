@@ -6,6 +6,7 @@ const config = {
   web3ProviderUrl: process.env.WEB3_PROVIDER_URL,
   contractOwner: process.env.NET_NAME,
   private_key: process.env.OWNER_PRIVATE_KEY,
+  apiKey: process.env.HG_WEATHER_KEY,
 };
 
 module.exports = config;
