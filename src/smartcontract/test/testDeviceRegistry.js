@@ -16,8 +16,8 @@ module.exports = async function(callback) {
       console.log("Registered Device:", isRegistered);
   
       //Authenticate the device
-      const isAuthenticated = await instance.authenticateDevice("device1234", "owner123");
-      console.log("Authenticated Device:", isAuthenticated);
+      //const isAuthenticated = await instance.authenticateDevice("device1234", "owner123");
+      //console.log("Authenticated Device:", isAuthenticated);
   
     } catch (error) {
       console.error("Erro ao executar o script:", error);
