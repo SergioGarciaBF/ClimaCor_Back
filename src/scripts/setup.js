@@ -9,18 +9,17 @@ const execCommand = (command, cwd = process.cwd()) => {
       if (error) {
         reject(`Error executing command: ${command}\n${stderr}`);
       } else {
-        resolve(stdout);
+        resolve(stdout || stderr);
       }
     });
   });
 };
 
-const rootDir = path.join(__dirname, '../../');
-
 const run = async () => {
   try {
+    const smartcontractPath = path.join(__dirname, '../smartcontract');
     //Remove build
-    const buildPath = path.join(__dirname, 'src/smartcontract/build');
+    const buildPath = path.join(__dirname, '../smartcontract/build/');
     
     //Check if the build folder exists and remove it if it does
     if (await fs.pathExists(buildPath)) {
@@ -31,18 +30,18 @@ const run = async () => {
 
     //Compile
     console.log('Compiling contracts...');
-    await execCommand('truffle compile', path.join(__dirname, '../smartcontract'));
+    await execCommand('truffle compile', smartcontractPath);
     console.log('Contracts compiled successfully.');
 
     //Migrate
     console.log('Migrating contracts...');
-    const migrateResult = await execCommand('truffle migrate --reset --network development', path.join(__dirname, '../smartcontract'));
+    const migrateResult = await execCommand('truffle migrate --reset --network development', smartcontractPath);
     console.log('Contracts migrated successfully.');
     console.log('Migration Result:', migrateResult);
 
     //Execute script registryDevice.js
     console.log('Running registry device...');
-    const configResult = await execCommand('node src/scripts/config-device.js', rootDir);
+    const configResult = await execCommand('truffle exec ../scripts/config-device.js', smartcontractPath);
     console.log('Config Result:', configResult);
 
     console.log('Script executed successfully.');

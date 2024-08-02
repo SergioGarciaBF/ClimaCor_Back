@@ -1,12 +1,11 @@
-const tuyaConnector = require('@tuya/tuya-connector-nodejs')
-const dotEnv = require('dotenv')
-dotEnv.config()
+const tuyaConnector = require('@tuya/tuya-connector-nodejs');
+const config = require('../config/dotenvConfig');
 
 function tuyaContext () {
     return new tuyaConnector.TuyaContext({
         baseUrl: "https://openapi.tuyaus.com/",
-        accessKey: process.env.TUYA_ACCESS_ID,
-        secretKey: process.env.TUYA_ACCESS_SECRET,
+        accessKey: config.tuyaAccessKey,
+        secretKey: config.tuyaSecretKey,
     });
 }
 

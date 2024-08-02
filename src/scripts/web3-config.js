@@ -34,19 +34,19 @@ const initWeb3 = async () => {
   }
 };
 
-const signMessage = async (deviceId, owner) => {
-  //Get private key
-  const privateKey = '0x' + config.private_key;
-  const signerAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
-  //Calculate the message hash
-  const messageHash = web3.utils.soliditySha3({ type: 'string', value: deviceId }, { type: 'string', value: owner });
-  //Sign the message using the generated private key
-  const { signature } = web3.eth.accounts.sign(messageHash, privateKey);
-  return { messageHash, signature, signerAddress };
-};
+// const signMessage = async (deviceId, owner) => {
+//   //Get private key
+//   const privateKey = '0x' + config.private_key;
+//   const signerAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
+//   //Calculate the message hash
+//   const messageHash = web3.utils.soliditySha3({ type: 'string', value: deviceId }, { type: 'string', value: owner });
+//   //Sign the message using the generated private key
+//   const { signature } = web3.eth.accounts.sign(messageHash, privateKey);
+//   return { messageHash, signature, signerAddress };
+// };
 
 module.exports = {
   initWeb3,
-  signMessage,
+  //signMessage,
 };
 

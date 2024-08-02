@@ -2413,6 +2413,18 @@ cli-cursor@^3.1.0:
   dependencies:
     restore-cursor "^3.1.0"
 
+"climacor@file:":
+  version "1.0.0"
+  resolved "file:"
+  dependencies:
+    "@tuya/tuya-connector-nodejs" "^2.1.2"
+    axios "^1.7.2"
+    climacor "file:"
+    cors "^2.8.5"
+    dotenv "^16.4.5"
+    express "^4.19.2"
+    truffle "^5.11.5"
+
 cliui@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/cliui/-/cliui-3.2.0.tgz"
