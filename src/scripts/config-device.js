@@ -3,7 +3,7 @@ const config = require('../config/dotenvConfig');
 module.exports = async function(callback) {
 
   const deviceId = config.tuyaDeviceId;
-  const owner = config.contractOwner;
+  const owner = '0x' + config.contractOwner;
 
   if (!deviceId || !owner) {
     console.error('Device ID or Owner is not defined in the configuration.');
@@ -17,6 +17,8 @@ module.exports = async function(callback) {
     
     // Get the available accounts
     const accounts = await web3.eth.getAccounts();
+
+    //const owner = accounts[0];
     
     // Register a new device
     await instance.registerDevice(deviceId, owner, { from: accounts[0] });
